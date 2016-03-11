@@ -137,34 +137,20 @@ $(function() {
          */
 
         var feed = $('.feed');
-        var entry1content,
-            entry2content;
+        var entry0content;
+
 
         beforeEach(function(done) {
-            var loadFeed0 = function() {
-                loadFeed(0, done);
-                entry1content = $('.feed').find('h2')[0];
-                console.log(entry1content);
-            };
-            var loadFeed1 = function() {
-                loadFeed(1, done);
-                entry2content = $('.feed').find('h2')[0];
-                console.log(entry2content);
-            };
-            loadFeed0();
-            loadFeed1();
+            loadFeed(1, done);
+            entry0content = feed.html();
         });
 
-        /*beforeEach(function(done) {
-            loadFeed(1, done);
-            entry2content = feed.find('h2')[0];
-            console.log(entry2content);
-        });*/
 
-        it('should change content when new feed is loaded', function() {
 
-            expect(entry1content).not.toEqual(entry2content);
-
+        it('should change content when new feed is loaded', function(done) {
+            loadFeed(0);
+            expect(feed.html()).not.toEqual(entry0content);
+            done();
         });
 
     });
