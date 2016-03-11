@@ -32,15 +32,43 @@ $(function() {
          * and that the URL is not empty.
          */
 
+        it('should have url defined and non-empty', function() {
+            allFeeds.forEach(function(feed) {
+                var url = feed.url;
+                expect(url).toBeDefined();
+                expect(url).not.toBeNull();
+                expect(url).not.toEqual('');
+            })
+        });
+
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+
+        it('should have name defined and non-empty', function() {
+            allFeeds.forEach(function(feed) {
+                var name = feed.name;
+                expect(name).toBeDefined();
+                expect(name).not.toBeNull();
+                expect(name).not.toEqual('');
+            })
+        });
+
+
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
+
+
+
+
+
+
+     /* TODO: Write a new test suite named "The menu" */
+
+    describe('The menu', function() {
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -48,13 +76,33 @@ $(function() {
          * hiding/showing of the menu element.
          */
 
-         /* TODO: Write a test that ensures the menu changes
+        it('should be hidden by default', function() {
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+        });
+
+        /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+        it('should change visibility when menu icon clicked', function() {
+
+            var menuIcon = $('.menu-icon-link');
+            // "click" the menu item
+            menuIcon.trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
+            // now click it again:
+            menuIcon.trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
+
+        });
+
+
+    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
+
+    describe('Initial Entries', function() {
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -63,10 +111,63 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+        var container = $('.feed');
+
+        beforeEach(function (done) {
+            loadFeed(0, done);
+        });
+
+        it('should have at least one entry in feed container', function () {
+
+            var entries = container.find('.entry');
+            expect(entries.length).toBeGreaterThan(0);
+        });
+
+    });
+
+
+
+    /* TODO: Write a new test suite named "New Feed Selection" */
+
+    describe('New Feed Selection', function() {
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+        var feed = $('.feed');
+        var entry1content,
+            entry2content;
+
+        beforeEach(function(done) {
+            var loadFeed0 = function() {
+                loadFeed(0, done);
+                entry1content = $('.feed').find('h2')[0];
+                console.log(entry1content);
+            };
+            var loadFeed1 = function() {
+                loadFeed(1, done);
+                entry2content = $('.feed').find('h2')[0];
+                console.log(entry2content);
+            };
+            loadFeed0();
+            loadFeed1();
+        });
+
+        /*beforeEach(function(done) {
+            loadFeed(1, done);
+            entry2content = feed.find('h2')[0];
+            console.log(entry2content);
+        });*/
+
+        it('should change content when new feed is loaded', function() {
+
+            expect(entry1content).not.toEqual(entry2content);
+
+        });
+
+    });
+
+
 }());
