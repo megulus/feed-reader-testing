@@ -23,10 +23,12 @@ var allFeeds = [
     }
 ];
 
+
 /* This function starts up our application. The Google Feed
  * Reader API is loaded asynchonously and will then call this
  * function when the API is loaded.
  */
+
 function init() {
     // Load the first feed we've defined (index of 0).
     loadFeed(0);
@@ -40,6 +42,7 @@ function init() {
  * This function all supports a callback as the second parameter
  * which will be called after everything has run successfully.
  */
+
  function loadFeed(id, cb) {
      var feedUrl = allFeeds[id].url,
          feedName = allFeeds[id].name;
@@ -122,7 +125,6 @@ $(function() {
 
         $('body').addClass('menu-hidden');
         loadFeed(item.data('id'));
-        console.log($('.feed').find('h2')[0]);
         return false;
     });
 
